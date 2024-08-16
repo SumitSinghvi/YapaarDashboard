@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+//collection order
+model Order {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  date     DateTime
+  priority String
+  quantity String
+  status   String
+  total    Float
+}
