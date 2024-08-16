@@ -1,15 +1,15 @@
 # yapaarDashboard
 
-first -> clone the repo
+1) clone the repo
 
 for client
 
-first -> cd demo-admin 
-second -> npm i
-thired -> npm run dev
+1) cd demo-admin 
+2) npm i
+3) npm run dev
 
 for server
 
-first -> cd server
-second -> node prisma/seed.js
-third -> npm run start
+1) cd server
+2) node prisma/seed.js
+3) npm run start
