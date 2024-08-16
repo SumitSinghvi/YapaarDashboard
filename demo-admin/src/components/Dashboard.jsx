@@ -18,31 +18,6 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { Calendar } from "lucide-react";
 import Pagination from "./Pagination";
 
-// Pagination Component
-// const Pagination = ({ totalOrders, ordersPerPage, paginate }) => {
-//   const pageNumbers = [];
-//   for (let i = 1; i <= Math.ceil(totalOrders / ordersPerPage); i++) {
-//     pageNumbers.push(i);
-//   }
-
-//   return (
-//     <nav>
-//       <ul className="flex justify-center mt-4 space-x-2">
-//         {pageNumbers.map((number) => (
-//           <li key={number}>
-//             <a
-//               onClick={() => paginate(number)}
-//               className="px-4 py-2 border rounded-md cursor-pointer hover:bg-gray-200"
-//             >
-//               {number}
-//             </a>
-//           </li>
-//         ))}
-//       </ul>
-//     </nav>
-//   );
-// };
-
 const Dashboard = ({ orders }) => {
   const [activeTab, setActiveTab] = useState("all");
   const [filteredOrders, setFilteredOrders] = useState(orders);

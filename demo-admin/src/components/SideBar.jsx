@@ -23,7 +23,7 @@ function SideBar() {
     ];
 
     return (
-        <div className="w-[20%] h-screen bg-gray-300 shadow-md">
+        <div className="w-[20%] bg-gray-300">
             <div className="p-4">
                 <h1 className="text-2xl font-semibold mb-6">YAPAAR</h1>
             </div>

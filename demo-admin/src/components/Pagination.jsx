@@ -52,9 +52,7 @@ const Pagination = ({
             </SelectContent>
           </Select>
         </div>
-
         <div className="flex">
-          {/* Previous Set */}
           {adjustedStart > 1 && (
             <li>
               <a
