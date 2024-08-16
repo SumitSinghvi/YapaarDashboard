@@ -16,6 +16,7 @@ const Pagination = ({
 }) => {
   const pageNumbers = [];
   const totalPages = Math.ceil(totalOrders / ordersPerPage);
+  console.log(totalPages);
   const rangeSize = 2;
 
   // total page numbers
@@ -24,8 +25,8 @@ const Pagination = ({
   }
 
   // Determine the range to display
-  const start = Math.max(currentPage - Math.floor(rangeSize / 2), 1);
-  const end = Math.min(start + rangeSize - 1, totalPages);
+  const temp = Math.max(currentPage - Math.floor(rangeSize / 2), 1);
+  const end = Math.min(temp + rangeSize - 1, totalPages);
 
   // Adjust the start if end is at the last page
   const adjustedStart = Math.max(end - rangeSize + 1, 1);
