@@ -7,12 +7,11 @@ import {
   SelectValue,
 } from "./ui/select";
 
-// Pagination Component
 const Pagination = ({
   totalOrders,
   ordersPerPage,
-  paginate,
   currentPage,
+  paginate,
   setOrdersPerPage,
 }) => {
   const pageNumbers = [];
