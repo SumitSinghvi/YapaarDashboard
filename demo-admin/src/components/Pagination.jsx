@@ -1,5 +1,14 @@
 import React from "react";
 import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "./ui/pagination";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -7,125 +16,84 @@ import {
   SelectValue,
 } from "./ui/select";
 
-const Pagination = ({
+const PaginationComponent = ({
   totalOrders,
   ordersPerPage,
   currentPage,
   paginate,
   setOrdersPerPage,
 }) => {
-  const pageNumbers = [];
   const totalPages = Math.ceil(totalOrders / ordersPerPage);
-  console.log(totalPages);
   const rangeSize = 2;
 
-  // total page numbers
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
-
-  // Determine the range to display
-  const temp = Math.max(currentPage - Math.floor(rangeSize / 2), 1);
-  const end = Math.min(temp + rangeSize - 1, totalPages);
-
-  // Adjust the start if end is at the last page
-  const adjustedStart = Math.max(end - rangeSize + 1, 1);
+  const start = Math.max(currentPage - Math.floor(rangeSize / 2), 1);
+  const end = Math.min(start + rangeSize - 1, totalPages);
 
   const handleChange = (value) => {
-    setOrdersPerPage(value);
+    setOrdersPerPage(Number(value));
   };
-  return (
-    <nav>
-      <ul className="flex justify-between mt-4 space-x-2">
-        <div className="flex items-center space-x-2">
-          <p className="w-28">Items per page</p>
-          <Select value={ordersPerPage} onValueChange={handleChange}>
-            <SelectTrigger className="w-16">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
-                <SelectItem key={value} value={value}>
-                  {value}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="flex">
-          {adjustedStart > 1 && (
-            <li>
-              <a
-                onClick={() => paginate(adjustedStart - 1)}
-                className="px-4 py-2 border rounded-md cursor-pointer hover:bg-gray-200"
-              >
-                &laquo; Prev
-              </a>
-            </li>
-          )}
 
-          {/* Page Number(s) */}
-          {adjustedStart > 1 && (
+  return (
+    <div className="flex flex-col sm:flex-row justify-between items-center mt-4 space-y-4 sm:space-y-0">
+      <div className="flex items-center space-x-2">
+        <p className="w-28">Items per page</p>
+        <Select value={ordersPerPage.toString()} onValueChange={handleChange}>
+          <SelectTrigger className="w-16">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
+              <SelectItem key={value} value={value.toString()}>
+                {value}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      <Pagination>
+        <PaginationContent>
+          {currentPage > 1 && (
+            <PaginationItem>
+              <PaginationPrevious onClick={() => paginate(currentPage - 1)} />
+            </PaginationItem>
+          )}
+          {start > 1 && (
             <>
-              {adjustedStart > 2 && (
-                <li>
-                  <span className="px-4 py-2 border rounded-md text-gray-600">
-                    ...
-                  </span>
-                </li>
-              )}
+              <PaginationItem>
+                <PaginationLink onClick={() => paginate(1)}>1</PaginationLink>
+              </PaginationItem>
+              {start > 2 && <PaginationEllipsis />}
             </>
           )}
-
-          {pageNumbers.slice(adjustedStart - 1, end).map((number) => (
-            <li key={number}>
-              <a
-                onClick={() => paginate(number)}
-                className={`px-4 py-2 border rounded-md cursor-pointer ${
-                  number === currentPage ? "bg-gray-200" : "hover:bg-gray-200"
-                }`}
+          {Array.from({ length: end - start + 1 }, (_, i) => start + i).map((page) => (
+            <PaginationItem key={page}>
+              <PaginationLink
+                onClick={() => paginate(page)}
+                isActive={page === currentPage}
               >
-                {number}
-              </a>
-            </li>
+                {page}
+              </PaginationLink>
+            </PaginationItem>
           ))}
-
-          {/* Next Set */}
           {end < totalPages && (
             <>
-              {end < totalPages - 1 && (
-                <li>
-                  <span className="px-4 py-2 border rounded-md text-gray-600">
-                    ...
-                  </span>
-                </li>
-              )}
-              <li>
-                <a
-                  onClick={() => paginate(totalPages)}
-                  className="px-4 py-2 border rounded-md cursor-pointer hover:bg-gray-200"
-                >
+              {end < totalPages - 1 && <PaginationEllipsis />}
+              <PaginationItem>
+                <PaginationLink onClick={() => paginate(totalPages)}>
                   {totalPages}
-                </a>
-              </li>
+                </PaginationLink>
+              </PaginationItem>
             </>
           )}
-
-          {/* Next Page */}
           {currentPage < totalPages && (
-            <li>
-              <a
-                onClick={() => paginate(currentPage + 1)}
-                className="px-4 py-2 border rounded-md cursor-pointer hover:bg-gray-200"
-              >
-                Next &raquo;
-              </a>
-            </li>
+            <PaginationItem>
+              <PaginationNext onClick={() => paginate(currentPage + 1)} />
+            </PaginationItem>
           )}
-        </div>
-      </ul>
-    </nav>
+        </PaginationContent>
+      </Pagination>
+    </div>
   );
 };
 
-export default Pagination;
+export default PaginationComponent;
